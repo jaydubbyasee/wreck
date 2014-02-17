@@ -23,6 +23,13 @@ namespace wreck
 		GLenum err = GL_NO_ERROR;
 		GLint compileStatus = GL_FALSE;
 		GLuint shader = glCreateShader(st);
+		this->id = shader;
+
+		if(0 == shader)
+		{
+			return false;
+		}
+
 		const char* src = source.c_str();
 		
 		// Binds shader source code to shader
@@ -30,7 +37,6 @@ namespace wreck
 		err = glGetError();
 		if(GL_NO_ERROR != err)
 		{
-			glDeleteShader(shader);
 			return false;
 		}
 
@@ -38,11 +44,8 @@ namespace wreck
 		glCompileShader(shader);
 		if(!getCompileStatus())
 		{
-			glDeleteShader(shader);
 			return false;
 		}
-
-		this->id = shader;
 
 		return true;
 	}
@@ -72,6 +75,7 @@ namespace wreck
 		glGetShaderiv(id, GL_COMPILE_STATUS, &compileStatus);
 		if(GL_TRUE != compileStatus)
 		{
+			std::cout << getCompileErrorMessage() << std::endl;
 			return false;
 		}
 
