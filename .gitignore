@@ -1,0 +1,12 @@
+*.o
+*.includecache
+*.marks
+*.bin
+*.make
+*.internal
+*.check_cache
+*.log
+*DependInfo.cmake
+*cmake_clean.cmake
+*CMakeDirectoryInformation.cmake
+build/*
