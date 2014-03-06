@@ -1,52 +1,68 @@
 #include "transform.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 namespace wreck
 {
 	Transform::Transform()
 	{
 		parent = nullptr;
+        position = glm::vec3(0.0f, 0.0f, 0.0f);
+        rotVec = glm::vec3(0.0f, 0.0f, 0.0f);
+        scalevec = glm::vec3(1.0f, 1.0f, 1.0f);
 	}
 
 	void Transform::translate(float x, float y, float z)
 	{
-		transformMatrix = glm::translate(transformMatrix, glm::vec3(x,y,z));
+        position += glm::vec3(x,y,z);
 	}
 
 	void Transform::rotate(float angle, glm::vec3 axis)
 	{
-		transformMatrix = glm::rotate(transformMatrix, angle, axis);
+        orientation = glm::rotate(orientation, angle, axis);
 	}
+
+    void Transform::rotate(float x, float y, float z)
+    {
+       rotVec = rotVec + glm::vec3(x, y, z);
+    }
 
 	void Transform::scale(float x, float y, float z)
 	{
-		transformMatrix = glm::scale(transformMatrix, glm::vec3(x,y,z));
+        scalevec = glm::vec3(scalevec);
 	}
 
-	glm::vec4 Transform::getLocalPosition()
+    glm::vec3 Transform::getLocalPosition()
 	{
-		// This can be optimized by caching position if it has not been modified.
-		return getLocalTransformMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        return position;
 	}
 
-	glm::vec4 Transform::getPosition()
+    glm::vec3 Transform::getPosition()
 	{
-		// This can be optimized by caching position if it has not been modified.
-		return getTransformMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        return position;
 	}
 
-	glm::mat4 Transform::getLocalTransformMatrix()
+    void Transform::setPosition(float x, float y, float z)
+    {
+        position = glm::vec3(x,y,z);
+    }
+
+    glm::mat4 Transform::getMatrix()
 	{
-		return transformMatrix;
+        glm::mat4 t = glm::translate(position);
+        glm::mat4 ry = glm::rotate(rotVec.y, glm::vec3(0.0f, 1.0f, 0.0f));
+        glm::mat4 rx = glm::rotate(rotVec.x, glm::vec3(1.0f, 0.0f, 0.0f));
+        glm::mat4 s = glm::scale(scalevec);
+
+        return t*rx*ry*s;
 	}
 
-	glm::mat4 Transform::getTransformMatrix()
+    glm::mat4 Transform::getInverseMatrix()
 	{
-		// For now we'll ignore applying parent transformations.
-		return transformMatrix;
+        return glm::inverse(getMatrix());
 	}
 
-	void Transform::setParentTransform(Transform* parent)
+    void Transform::setParent(Transform* parent)
 	{
 		this->parent = parent;
 	}

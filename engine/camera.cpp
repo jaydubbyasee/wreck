@@ -5,7 +5,7 @@ namespace wreck
 {
 	Camera::Camera(float fov, float aspectRatio, float near, float far)
 	{
-		this->fieldOfView = fov;
+		this->fov = fov;
 		this->aspectRatio = aspectRatio;
 		this->near = 0.1f;
 		this->far = 1000.0f;
@@ -53,14 +53,7 @@ namespace wreck
 
 	glm::mat4 Camera::getViewMatrix()
 	{
-		// Recompute the view matrix if needed.
-		if(viewChanged)
-		{
-			view = glm::inverse(transform.getTransformMatrix());
-			viewChanged = false;
-		}
-
-		return view;
+        return transform.getInverseMatrix();
 	}
 
 	void Camera::setViewMatrix(glm::mat4 view)
@@ -74,10 +67,12 @@ namespace wreck
 		if(projectionChanged)
 		{
 			projection = glm::perspective(
-				fieldOfView,
+				fov,
 				aspectRatio,
 				near,
 				far);
+
+			projectionChanged = false;
 		}
 
 		return projection;
@@ -86,6 +81,7 @@ namespace wreck
 	void Camera::setProjectionMatrix(glm::mat4 projection)
 	{
 		this->projection = projection;
+		projectionChanged = true;
 	}
 
 	Transform* Camera::getTransform()

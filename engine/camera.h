@@ -95,7 +95,7 @@ namespace wreck
 		Transform transform;
 		glm::mat4 view;
 		glm::mat4 projection;
-		float fieldOfView;
+		float fov;
 		float aspectRatio;
 		float near;
 		float far;
