@@ -5,11 +5,9 @@
 
 namespace wreck
 {
-class CameraTransform : Transform
+class CameraTransform : public Transform
 {
 public:
-    CameraTransform();
-    ~CameraTransform();
 
     /**
      * @brief rotate
@@ -17,7 +15,7 @@ public:
      * @param y
      * @param z
      */
-    void rotate(float x, float y, float z);
+    virtual void rotate(float x, float y, float z);
 };
 }
 

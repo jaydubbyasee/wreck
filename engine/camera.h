@@ -1,6 +1,7 @@
 #ifndef __WRECK_ENGINE_CAMERA_H
 #define __WRECK_ENGINE_CAMERA_H
 
+#include "cameratransform.h"
 #include "transform.h"
 
 namespace wreck
@@ -73,26 +74,14 @@ namespace wreck
 		 */
 		glm::mat4 getProjectionMatrix();
 
-		/**
-		 * Sets the projection matrix.
-		 * @param the projection matrix.
-		 */
-		void setProjectionMatrix(glm::mat4 projection);
-
 		/** 
 		 * Gets the camera's transform.
 		 * @return the camera's transform.
 		 */
 		Transform* getTransform();
 
-		/**
-		 * Sets the camera's transform.
-		 * @param transform a transform object.
-		 */
-		void setTransform(Transform transform);
-
 	private:
-		Transform transform;
+        CameraTransform transform;
 		glm::mat4 view;
 		glm::mat4 projection;
 		float fov;

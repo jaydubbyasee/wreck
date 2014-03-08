@@ -78,23 +78,11 @@ namespace wreck
 		return projection;
 	}
 
-	void Camera::setProjectionMatrix(glm::mat4 projection)
-	{
-		this->projection = projection;
-		projectionChanged = true;
-	}
-
 	Transform* Camera::getTransform()
 	{
 		/* If this functions is being called then it is safe to assume that the camera 
 		   is being transformed. */
 		viewChanged = true;
 		return &transform;
-	}
-
-	void Camera::setTransform(Transform transform)
-	{
-		this->transform = transform;
-		viewChanged = true;
 	}
 }

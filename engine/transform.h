@@ -105,7 +105,7 @@ namespace wreck
          */
         Transform* getRoot();
 
-	private:
+    protected:
 		Transform* parent;
         glm::vec3 position;
         glm::vec3 scalevec;
