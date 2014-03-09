@@ -109,7 +109,29 @@ void createMesh(GLuint& vao)
     tex.use();
 }
 
-void controlCamera(SDL_Event& evt, SDL_Window* window, Camera& camera, Uint32 ticksSinceLastFrame)
+void keyboardCameraControl(SDL_Event& evt, Camera& camera, Uint32 ticksSinceLastFrame)
+{
+    glm::vec3 f = camera.getTransform()->forward();
+    glm::vec3 r = camera.getTransform()->right();
+
+    switch(evt.key.keysym.sym)
+    {
+    case SDLK_w:
+        camera.getTransform()->translate(f.x, f.y, f.z);
+        break;
+    case SDLK_a:
+        camera.getTransform()->translate(-r.x, -r.y, -r.z);
+        break;
+    case SDLK_s:
+        camera.getTransform()->translate(-f.x, -f.y, -f.z);
+        break;
+    case SDLK_d:
+        camera.getTransform()->translate(r.x, r.y, r.z);
+        break;
+    }
+}
+
+void mouseCameraControl(SDL_Event& evt, SDL_Window* window, Camera& camera, Uint32 ticksSinceLastFrame)
 {
     float radiansPerSecond = 0.1f;
     float x = -evt.motion.xrel * (0.001f*ticksSinceLastFrame)*radiansPerSecond;
@@ -152,8 +174,6 @@ int main(int argc, char** argv)
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
-    glm::mat4 m(1.0f);
-    //glm::mat4 v = glm::inverse(glm::rotate(glm::translate(glm::mat4(), glm::vec3(0.0f, 0.0f, 3.0f)), -3.14f/3.0f, glm::vec3(0.0f, 1.0f, 0.0f)));
     glm::mat4 v = camera.getViewMatrix();
     glm::mat4 p = camera.getProjectionMatrix();
     Uint32 ticks = SDL_GetTicks();
@@ -171,6 +191,7 @@ int main(int argc, char** argv)
 			switch (event.type)
             {
             case SDL_KEYDOWN:
+                keyboardCameraControl(event, camera, elapsed);
                 break;
             case SDL_KEYUP:
                 // if escape is pressed, quit
@@ -178,7 +199,7 @@ int main(int argc, char** argv)
                     running = false; // set status to 1 to exit main loop
                 break;
             case SDL_MOUSEMOTION:
-                controlCamera(event, window, camera, elapsed);
+                mouseCameraControl(event, window, camera, elapsed);
                 break;
             case SDL_QUIT:
                 running = false;
@@ -188,7 +209,7 @@ int main(int argc, char** argv)
 
 		// Begin drawing
 		shaderProg.begin();
-            glm::mat4 mvp = p*camera.getViewMatrix()*glm::mat4();
+            glm::mat4 mvp = p*camera.getViewMatrix();
             shaderProg.setUniformValue(0, mvp);
 			glDrawArrays(GL_TRIANGLES, 0, 3);
 		shaderProg.end();

@@ -54,7 +54,7 @@ namespace wreck
         glm::mat4 rx = glm::rotate(rotVec.x, glm::vec3(1.0f, 0.0f, 0.0f));
         glm::mat4 s = glm::scale(scalevec);
 
-        return t*rx*ry*s;
+        return t*ry*rx*s;
 	}
 
     glm::mat4 Transform::getInverseMatrix()
@@ -66,4 +66,22 @@ namespace wreck
 	{
 		this->parent = parent;
 	}
+
+    glm::vec3 Transform::forward()
+    {
+        glm::mat4 m = getMatrix();
+        return glm::vec3(-m[2][0], -m[2][1], -m[2][2]);
+    }
+
+    glm::vec3 Transform::right()
+    {
+        glm::mat4 m = getMatrix();
+        return glm::vec3(m[0][0], m[0][1], m[0][2]);
+    }
+
+    glm::vec3 Transform::up()
+    {
+        glm::mat4 m = getMatrix();
+        return glm::vec3(m[1][0], m[1][1], m[1][2]);
+    }
 }

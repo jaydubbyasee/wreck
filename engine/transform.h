@@ -105,6 +105,12 @@ namespace wreck
          */
         Transform* getRoot();
 
+        glm::vec3 forward();
+
+        glm::vec3 right();
+
+        glm::vec3 up();
+
     protected:
 		Transform* parent;
         glm::vec3 position;
