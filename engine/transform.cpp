@@ -54,7 +54,7 @@ namespace wreck
         glm::mat4 rx = glm::rotate(rotVec.x, glm::vec3(1.0f, 0.0f, 0.0f));
         glm::mat4 s = glm::scale(scalevec);
 
-        return t*ry*rx*s;
+        return t * ry* rx * s;
 	}
 
     glm::mat4 Transform::getInverseMatrix()

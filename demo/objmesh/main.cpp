@@ -8,6 +8,7 @@
 #include "engine/fragmentshader.h"
 #include "engine/shaderprogram.h"
 #include "engine/texture.h"
+#include "engine/mesh.h"
 
 using namespace wreck;
 
@@ -23,7 +24,7 @@ bool initSDL(SDL_Window** window, SDL_GLContext* ctx)
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
 
     *window = SDL_CreateWindow("Demo: Camera Test",
 		SDL_WINDOWPOS_CENTERED,
@@ -63,50 +64,6 @@ bool initGLEW()
 	while(err != GL_NO_ERROR);
 
 	return true;
-}
-
-void createMesh(GLuint& vao)
-{
-    GLuint vbo;
-    GLuint uvbo;
-
-    float vertexBuffer[] =
-    {
-        0.0f,0.0f,0.0f,
-        1.0f,0.0f,0.0f,
-        1.0f,1.0f,0.0f
-    };
-
-    float uvBuffer[] =
-    {
-        0.0f,0.0f,
-        1.0f,0.0f,
-        1.0f,1.0f
-    };
-
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexBuffer), vertexBuffer, GL_STATIC_DRAW);
-
-    // Note: Remember that the glVertexAttribPointer should not be called until after
-    // a vertex buffer object has been bound. Otherwise, you may encounter a segfault.
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-    glGenBuffers(1, &uvbo);
-    glBindBuffer(GL_ARRAY_BUFFER, uvbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(uvBuffer), uvBuffer, GL_STATIC_DRAW);
-
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-    // In practical situations, it may be useful to store Textures in a collection of
-    // some sort so they may be reused for additional mesh instances.
-    Texture tex;
-    tex.load("../../wreck/assets/uvpattern.dds");
-    tex.use();
 }
 
 void keyboardCameraControl(SDL_Event& evt, Camera& camera, Uint32 ticksSinceLastFrame)
@@ -158,28 +115,33 @@ int main(int argc, char** argv)
                   0.1f,
                   1000.0f);
     camera.getTransform()->setPosition(0.0f,0.0f,5.0f);
-    createMesh(vao);
 
 	VertexShader vs;
 	FragmentShader fs;
 	ShaderProgram shaderProg;
 
-    if(!vs.load("../../wreck/assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    Mesh mesh;
+    mesh.load("../../wreck/assets/bunny.obj");
+    mesh.use();
+    if(!vs.load("../../wreck/assets/diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("../../wreck/assets/diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
 	std::cout << "Linking..." << std::endl;
 	shaderProg.setVertexShader(&vs);
 	shaderProg.setFragmentShader(&fs);
 	shaderProg.link();
 
+    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
-    glm::mat4 v = camera.getViewMatrix();
     glm::mat4 p = camera.getProjectionMatrix();
+    glm::vec4 diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     Uint32 ticks = SDL_GetTicks();
 	bool running = true;
 	while(running)
 	{
+        glm::mat4 v = camera.getViewMatrix();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		SDL_Event event;
@@ -209,9 +171,10 @@ int main(int argc, char** argv)
 
 		// Begin drawing
 		shaderProg.begin();
-            glm::mat4 mvp = p*camera.getViewMatrix();
+            glm::mat4 mvp = p*v*glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
             shaderProg.setUniformValue(0, mvp);
-			glDrawArrays(GL_TRIANGLES, 0, 3);
+            shaderProg.setUniformValue(1, diffuse);
+            glDrawElements(GL_TRIANGLES, mesh.tris.size(), GL_UNSIGNED_INT, 0);
 		shaderProg.end();
 
 		SDL_GL_SwapWindow(window);

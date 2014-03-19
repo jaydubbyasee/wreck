@@ -9,3 +9,7 @@ target_link_libraries(texturedtriangle engine GL GLEW SDL2)
 add_executable(cameratest cameratest/main.cpp)
 include_directories(cameratest "..")
 target_link_libraries(cameratest engine GL GLEW SDL2)
+
+add_executable(objmesh objmesh/main.cpp)
+include_directories(objmesh "..")
+target_link_libraries(objmesh engine GL GLEW SDL2)
