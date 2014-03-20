@@ -68,8 +68,8 @@ bool initGLEW()
 
 void keyboardCameraControl(SDL_Event& evt, Camera& camera, Uint32 ticksSinceLastFrame)
 {
-    glm::vec3 f = camera.getTransform()->forward();
-    glm::vec3 r = camera.getTransform()->right();
+    glm::vec3 f = camera.getTransform()->forward()*0.15f;
+    glm::vec3 r = camera.getTransform()->right()*0.15f;
 
     switch(evt.key.keysym.sym)
     {
@@ -90,12 +90,14 @@ void keyboardCameraControl(SDL_Event& evt, Camera& camera, Uint32 ticksSinceLast
 
 void mouseCameraControl(SDL_Event& evt, SDL_Window* window, Camera& camera, Uint32 ticksSinceLastFrame)
 {
-    float radiansPerSecond = 0.1f;
-    float x = -evt.motion.xrel * (0.001f*ticksSinceLastFrame)*radiansPerSecond;
-    float y = -evt.motion.yrel * (0.001f*ticksSinceLastFrame)*radiansPerSecond;
+    float degreesPerSecond = 1.0f;
+    float x = -evt.motion.xrel * (0.001f*ticksSinceLastFrame)*degreesPerSecond;
+    float y = -evt.motion.yrel * (0.001f*ticksSinceLastFrame)*degreesPerSecond;
 
     SDL_WarpMouseInWindow(window, width/2, height/2);
-    camera.getTransform()->rotate(y, x, 0.0f);
+    camera.getTransform()->rotate(glm::radians(y), glm::radians(x), 0.0f);
+
+    std::cout << x << "," << y << std::endl;
 }
 
 int main(int argc, char** argv)
@@ -112,7 +114,7 @@ int main(int argc, char** argv)
     // Create camera
     Camera camera(glm::radians(60.0f),
                   static_cast<float>(width)/static_cast<float>(height),
-                  0.1f,
+                  0.000001f,
                   1000.0f);
     camera.getTransform()->setPosition(0.0f,0.0f,5.0f);
 
@@ -122,7 +124,6 @@ int main(int argc, char** argv)
 
     Mesh mesh;
     mesh.load("../../wreck/assets/bunny.obj");
-    mesh.use();
     if(!vs.load("../../wreck/assets/diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
     if(!fs.load("../../wreck/assets/diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
@@ -171,6 +172,7 @@ int main(int argc, char** argv)
 
 		// Begin drawing
 		shaderProg.begin();
+            mesh.use();
             glm::mat4 mvp = p*v*glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
             shaderProg.setUniformValue(0, mvp);
             shaderProg.setUniformValue(1, diffuse);
