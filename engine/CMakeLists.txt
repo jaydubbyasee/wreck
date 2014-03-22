@@ -8,6 +8,7 @@ add_library(engine
 	texture.cpp
 	transform.cpp
         vertex.cpp
-	vertexshader.cpp)
+        vertexshader.cpp
+        wavefrontmeshfactory.cpp)
 
 target_link_libraries(engine GL GLEW)

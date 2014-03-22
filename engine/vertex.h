@@ -5,7 +5,7 @@
 
 namespace wreck
 {
-class Vertex
+struct Vertex
 {
 public:
     Vertex(glm::vec3 position);

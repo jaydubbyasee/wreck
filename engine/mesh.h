@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/vec3.hpp>
 #include <vector>
+#include "vertex.h"
 
 namespace wreck
 {
@@ -14,22 +15,18 @@ class Mesh
 {
 
 public:
-    Mesh();
+    Mesh(std::vector<Vertex> vertexData, std::vector<uint> indices);
     ~Mesh();
 
-    bool load(std::string filename);
     void use();
-    void parseLine(std::string line);
+    void updateBindings();
 
-    std::vector<float> pos;
-    std::vector<glm::vec2> uv;
-    std::vector<glm::vec3> norm;
-    std::vector<uint> tris;
+    std::vector<Vertex> vertexData;
+    std::vector<uint> indices;
 
     GLuint vao;
     GLuint vbo;
-    GLuint uvbo;
-    GLuint indexBuffer;
+    GLuint ibo;
 };
 
 }

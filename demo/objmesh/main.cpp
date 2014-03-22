@@ -9,6 +9,7 @@
 #include "engine/shaderprogram.h"
 #include "engine/texture.h"
 #include "engine/mesh.h"
+#include "engine/wavefrontmeshfactory.h"
 
 using namespace wreck;
 
@@ -122,17 +123,20 @@ int main(int argc, char** argv)
 	FragmentShader fs;
 	ShaderProgram shaderProg;
 
-    Mesh mesh;
-    mesh.load("../../wreck/assets/bunny.obj");
-    if(!vs.load("../../wreck/assets/diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    WavefrontMeshFactory factory;
+    Mesh* mesh = factory.load("../../wreck/assets/uvcube.obj");
+    if(!vs.load("../../wreck/assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("../../wreck/assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+
+    Texture texture;
+    texture.load("../../wreck/assets/uvpattern.dds");
 
 	std::cout << "Linking..." << std::endl;
 	shaderProg.setVertexShader(&vs);
 	shaderProg.setFragmentShader(&fs);
 	shaderProg.link();
 
-    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
@@ -172,11 +176,12 @@ int main(int argc, char** argv)
 
 		// Begin drawing
 		shaderProg.begin();
-            mesh.use();
+            mesh->use();
+            texture.use();
             glm::mat4 mvp = p*v*glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
             shaderProg.setUniformValue(0, mvp);
-            shaderProg.setUniformValue(1, diffuse);
-            glDrawElements(GL_TRIANGLES, mesh.tris.size(), GL_UNSIGNED_INT, 0);
+            //shaderProg.setUniformValue(1, diffuse);
+            glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
 		shaderProg.end();
 
 		SDL_GL_SwapWindow(window);
