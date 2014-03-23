@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include <map>
 #include "vertex.h"
 #include "mesh.h"
 
@@ -15,7 +16,15 @@ class WavefrontMeshFactory
 public:
     Mesh* load(std::string filename);
 private:
-    void parseVertex(std::string& vertToken,
+    void processVertex(std::string vertToken,
+                       std::vector<glm::vec3>& position,
+                       std::vector<glm::vec2>& uv,
+                       std::vector<glm::vec3>& normal,
+                       std::vector<uint>& indices,
+                       std::map<std::string, uint>& vertMap,
+                       std::vector<Vertex>& vertexData);
+
+    void parseVertex(std::string vertToken,
                        const std::vector<glm::vec3>& position,
                        const std::vector<glm::vec2>& uv,
                        const std::vector<glm::vec3>& normal,

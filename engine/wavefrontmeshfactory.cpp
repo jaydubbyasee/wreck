@@ -79,41 +79,9 @@ Mesh* WavefrontMeshFactory::load(std::string filename)
             // For now we'll ignore the fact that there may be uv's or normals
             s >> keyword >> fv1 >> fv2 >> fv3;
 
-            // Check if vertex token is unique
-            if(vertMap.find(fv1) != vertMap.end())
-            {
-                indices.push_back(vertMap.at(fv1));
-            }
-            else
-            {
-                parseVertex(fv1, position, uv, normal, vertexData);
-                vertMap[fv1] = vertexData.size()-1;
-                indices.push_back(vertexData.size()-1);
-            }
-
-            // Check if vertex token is unique
-            if(vertMap.find(fv2) != vertMap.end())
-            {
-                indices.push_back(vertMap.at(fv2));
-            }
-            else
-            {
-                parseVertex(fv2, position, uv, normal, vertexData);
-                vertMap[fv2] = vertexData.size()-1;
-                indices.push_back(vertexData.size()-1);
-            }
-
-            // Check if vertex token is unique
-            if(vertMap.find(fv3) != vertMap.end())
-            {
-                indices.push_back(vertMap.at(fv3));
-            }
-            else
-            {
-                parseVertex(fv3, position, uv, normal, vertexData);
-                vertMap[fv3] = vertexData.size()-1;
-                indices.push_back(vertexData.size()-1);
-            }
+            processVertex(fv1, position, uv, normal, indices, vertMap, vertexData);
+            processVertex(fv2, position, uv, normal, indices, vertMap, vertexData);
+            processVertex(fv3, position, uv, normal, indices,  vertMap, vertexData);
         }
         // Ignore any other definitions for now.
     }
@@ -123,7 +91,27 @@ Mesh* WavefrontMeshFactory::load(std::string filename)
     return mesh;
 }
 
-void WavefrontMeshFactory::parseVertex(std::string& vertToken,
+void WavefrontMeshFactory::processVertex(std::string vertToken,
+                                         std::vector<glm::vec3>& position,
+                                         std::vector<glm::vec2>& uv,
+                                         std::vector<glm::vec3>& normal,
+                                         std::vector<uint>& indices,
+                                         std::map<std::string, uint>& vertMap,
+                                         std::vector<Vertex>& vertexData)
+{
+    if(vertMap.find(vertToken) != vertMap.end())
+    {
+        indices.push_back(vertMap.at(vertToken));
+    }
+    else
+    {
+        parseVertex(vertToken, position, uv, normal, vertexData);
+        vertMap[vertToken] = vertexData.size()-1;
+        indices.push_back(vertexData.size()-1);
+    }
+}
+
+void WavefrontMeshFactory::parseVertex(std::string vertToken,
                                          const std::vector<glm::vec3>& position,
                                          const std::vector<glm::vec2>& uv,
                                          const std::vector<glm::vec3>& normal,
