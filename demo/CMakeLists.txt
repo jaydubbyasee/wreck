@@ -13,3 +13,7 @@ target_link_libraries(cameratest engine GL GLEW SDL2)
 add_executable(objmesh objmesh/main.cpp)
 include_directories(objmesh "..")
 target_link_libraries(objmesh engine GL GLEW SDL2)
+
+add_executable(lambert lambert/main.cpp)
+include_directories(lambert "..")
+target_link_libraries(lambert engine GL GLEW SDL2)

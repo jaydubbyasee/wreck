@@ -73,6 +73,7 @@ namespace wreck
          * @param z Position on the z-axis.
          */
         virtual void setPosition(float x, float y, float z);
+        virtual void setPosition(glm::vec3 position);
 
 		/**
 		 * Gets the local 4x4 transformation matrix.

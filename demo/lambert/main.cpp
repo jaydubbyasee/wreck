@@ -10,6 +10,7 @@
 #include "engine/texture.h"
 #include "engine/mesh.h"
 #include "engine/wavefrontmeshfactory.h"
+#include "engine/light.h"
 
 using namespace wreck;
 
@@ -27,7 +28,7 @@ bool initSDL(SDL_Window** window, SDL_GLContext* ctx)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 4);
 
-    *window = SDL_CreateWindow("Demo: Mesh Test",
+    *window = SDL_CreateWindow("Demo: Lambert",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
         width, height,
@@ -125,11 +126,14 @@ int main(int argc, char** argv)
 
     WavefrontMeshFactory factory;
     Mesh* mesh = factory.load("../../wreck/assets/uvcube.obj");
-    if(!vs.load("../../wreck/assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    if(!vs.load("../../wreck/assets/lambert.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("../../wreck/assets/lambert.fs")) std::cout << "Fragment shader error." << std::endl;
 
     Texture texture;
     texture.load("../../wreck/assets/uvpattern.dds");
+
+    Light light(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    light.setIntensity(1.0f);
 
 	std::cout << "Linking..." << std::endl;
 	shaderProg.setVertexShader(&vs);
@@ -140,13 +144,10 @@ int main(int argc, char** argv)
     glEnable(GL_DEPTH_TEST);
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
-    glm::mat4 p = camera.getProjectionMatrix();
-    glm::vec4 diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
     Uint32 ticks = SDL_GetTicks();
 	bool running = true;
 	while(running)
 	{
-        glm::mat4 v = camera.getViewMatrix();
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		SDL_Event event;
@@ -174,12 +175,25 @@ int main(int argc, char** argv)
             }
 		}
 
+        glm::vec3 lightPos = light.getTransform()->getPosition();
+        glm::vec3 lightColor = light.getColor() * light.getIntensity();
+        glm::vec4 diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        glm::mat4 m = glm::mat4(1.0f);
+        glm::mat4 v = camera.getViewMatrix();
+        glm::mat4 p = camera.getProjectionMatrix();
+        glm::mat4 mvp = p*v*m;
+
+
 		// Begin drawing
 		shaderProg.begin();
             mesh->use();
             texture.use();
-            glm::mat4 mvp = p*v*glm::scale(glm::mat4(1.0f), glm::vec3(2.0f, 2.0f, 2.0f));
+
             shaderProg.setUniformValue(0, mvp);
+            shaderProg.setUniformValue(1, m);
+            shaderProg.setUniformValue(2, v);
+            shaderProg.setUniformValue(3, lightPos);
+            shaderProg.setUniformValue(4, lightColor);
             //shaderProg.setUniformValue(1, diffuse);
             glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
 		shaderProg.end();

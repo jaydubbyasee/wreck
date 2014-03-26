@@ -2,11 +2,11 @@
 #define __WRECK_ENGINE_CAMERA_H
 
 #include "cameratransform.h"
-#include "transform.h"
+#include "entity.h"
 
 namespace wreck
 {
-	class Camera
+    class Camera : public Entity
 	{
 	public:
 
@@ -78,7 +78,7 @@ namespace wreck
 		 * Gets the camera's transform.
 		 * @return the camera's transform.
 		 */
-		Transform* getTransform();
+        virtual Transform* getTransform();
 
 	private:
         CameraTransform transform;

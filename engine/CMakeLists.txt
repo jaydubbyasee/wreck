@@ -1,7 +1,9 @@
 add_library(engine 
 	camera.cpp
         cameratransform.cpp
+        entity.cpp
 	fragmentshader.cpp
+        light.cpp
         mesh.cpp
 	shader.cpp
 	shaderprogram.cpp

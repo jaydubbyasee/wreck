@@ -47,6 +47,11 @@ namespace wreck
         position = glm::vec3(x,y,z);
     }
 
+    void Transform::setPosition(glm::vec3 position)
+    {
+        this->position = position;
+    }
+
     glm::mat4 Transform::getMatrix()
 	{
         glm::mat4 t = glm::translate(position);
