@@ -9,26 +9,26 @@
 
 namespace wreck
 {
-	/**
-	 * Transform is a utility class for generating transformation matrices.
-	 *
-	 * @author Jonathan Chuong
-	 */
-	class Transform
-	{
-	public:
+    /**
+     * Transform is a utility class for generating transformation matrices.
+     *
+     * @author Jonathan Chuong
+     */
+    class Transform
+    {
+    public:
         /**
          * @brief Transform
          */
-		Transform();
+        Transform();
         virtual ~Transform() {}
 
-		/**
+        /**
          * @brief translate Translates to position (x,y,z) in local coordinate system.
-		 * @param x the amount to translate on the x-axis
-		 * @param y the amount to translate on the y-axis
-		 * @param z the amount to translate on the z-axis
-		 */
+         * @param x the amount to translate on the x-axis
+         * @param y the amount to translate on the y-axis
+         * @param z the amount to translate on the z-axis
+         */
         virtual void translate(float x, float y, float z);
 
         /**
@@ -46,12 +46,12 @@ namespace wreck
          */
         virtual void rotate(float x, float y, float z);
 
-		/**
+        /**
          * @brief scale Scales by x,y,z along the x,y,z axes respectively.
-		 * @param x the scale factor along the x-axis
-		 * @param y the scale factor along the y-axis
-		 * @param z the scale factor along the z-axis
-		 */
+         * @param x the scale factor along the x-axis
+         * @param y the scale factor along the y-axis
+         * @param z the scale factor along the z-axis
+         */
         virtual void scale(float x, float y, float z);
 
         /**
@@ -60,10 +60,10 @@ namespace wreck
          */
         virtual glm::vec3 getLocalPosition();
 
-		/**
+        /**
          * @brief getPosition Gets the position after applying local and parent transformations.
-		 * @return the position vector.
-		 */
+         * @return the position vector.
+         */
         virtual glm::vec3 getPosition();
 
         /**
@@ -75,18 +75,18 @@ namespace wreck
         virtual void setPosition(float x, float y, float z);
         virtual void setPosition(glm::vec3 position);
 
-		/**
-		 * Gets the local 4x4 transformation matrix.
-		 *
-		 * @return the local 4x4 transformation matrix.
-		 */
+        /**
+         * Gets the local 4x4 transformation matrix.
+         *
+         * @return the local 4x4 transformation matrix.
+         */
         glm::mat4 getMatrix();
 
-		/**
-		 * Gets the 4x4 transformation matrix.
-		 *
-		 * @return the 4x4 transformation matrix.
-		 */
+        /**
+         * Gets the 4x4 transformation matrix.
+         *
+         * @return the 4x4 transformation matrix.
+         */
         glm::mat4 getInverseMatrix();
 
         /**
@@ -95,9 +95,9 @@ namespace wreck
          */
         Transform* getParent();
 
-		/**
-		 * Sets parent transform.
-		 */
+        /**
+         * Sets parent transform.
+         */
         void setParent(Transform* parent);
 
         /**
@@ -113,12 +113,12 @@ namespace wreck
         glm::vec3 up();
 
     protected:
-		Transform* parent;
+        Transform* parent;
         glm::vec3 position;
         glm::vec3 scalevec;
         glm::vec3 rotVec;
         glm::quat orientation;
-	};
+    };
 }
 
 #endif

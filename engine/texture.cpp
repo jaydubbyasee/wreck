@@ -6,47 +6,47 @@
 
 namespace wreck
 {
-	Texture::Texture()
-	{
+    Texture::Texture()
+    {
 
-	}
+    }
 
-	Texture::~Texture()
-	{
+    Texture::~Texture()
+    {
 
-	}
+    }
 
-	bool Texture::load(std::string filename)
-	{
-		gli::texture2D texture(gli::load_dds(filename.c_str()));
+    bool Texture::load(std::string filename)
+    {
+        gli::texture2D texture(gli::load_dds(filename.c_str()));
 
-		if(texture.empty())
-		{
-			return false;
-		}
+        if(texture.empty())
+        {
+            return false;
+        }
 
-		glGenTextures(1, &texid);
-		glBindTexture(GL_TEXTURE_2D, texid);
-		glTexImage2D(
-			GL_TEXTURE_2D,
-			0,
-			GL_RGB,
-			texture.dimensions().x,
-			texture.dimensions().y,
-			0,
-			GL_BGR,
-			GL_UNSIGNED_BYTE,
-			texture.data()
-		);
+        glGenTextures(1, &texid);
+        glBindTexture(GL_TEXTURE_2D, texid);
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RGB,
+            texture.dimensions().x,
+            texture.dimensions().y,
+            0,
+            GL_BGR,
+            GL_UNSIGNED_BYTE,
+            texture.data()
+        );
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-		return true;
-	}
+        return true;
+    }
 
-	void Texture::use()
-	{
-		glBindTexture(GL_TEXTURE_2D, texid);
-	}
+    void Texture::use()
+    {
+        glBindTexture(GL_TEXTURE_2D, texid);
+    }
 }

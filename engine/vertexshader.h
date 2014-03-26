@@ -5,11 +5,11 @@
 
 namespace wreck
 {
-	class VertexShader : public Shader
-	{
-	public:
-		virtual bool load(std::string filename);
-	};
+    class VertexShader : public Shader
+    {
+    public:
+        virtual bool load(std::string filename);
+    };
 }
 
 #endif
