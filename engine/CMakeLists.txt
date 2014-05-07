@@ -1,4 +1,5 @@
-add_library(engine 
+add_library(engine
+    basicapplication.cpp
     camera.cpp
     cameratransform.cpp
     entity.cpp
