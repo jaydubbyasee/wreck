@@ -19,7 +19,7 @@ bool initSDL(SDL_Window** window, SDL_GLContext* ctx)
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         std::cout << "SDL failed to initialize" << std::endl;
-    return false;
+        return false;
     }
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);

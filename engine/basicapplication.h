@@ -1,6 +1,9 @@
 #ifndef __WRECK_ENGINE_BASICAPPLICATION_H
 #define __WRECK_ENGINE_BASICAPPLICATION_H
 
+#include <SDL2/SDL.h>
+#include <string>
+
 namespace wreck
 {
 
@@ -23,7 +26,7 @@ protected:
      * @brief loadResources Loads any resources/content that will be used
      * by the application.
      */
-    virtual void load_resources();
+    virtual void loadResources();
 
     /**
      * @brief update This method is called once per frame update. Perform any
@@ -38,11 +41,16 @@ protected:
      */
     virtual void draw();
 
-    bool running;
+    bool            running;
+    int             width;
+    int             height;
+    std::string     windowTitle;
+    SDL_Window*     window;
+    SDL_GLContext   glContext;
 
 private:
-    virtual void initGLEW();
-    virtual void initSDL();
+    virtual bool initGLEW();
+    virtual bool initSDL();
 };
 
 }
