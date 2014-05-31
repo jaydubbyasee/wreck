@@ -14,3 +14,6 @@ add_subdirectory(engine)
 
 # Demo directory
 add_subdirectory(demo)
+
+# Test directory
+add_subdirectory(test)
