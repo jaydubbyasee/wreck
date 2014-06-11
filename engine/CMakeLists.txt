@@ -4,15 +4,7 @@ add_library(engine
     cameratransform.cpp
     config.cpp
     entity.cpp
-    fragmentshader.cpp
-    light.cpp
-    mesh.cpp
-    shader.cpp
-    shaderprogram.cpp
-    texture.cpp
-    transform.cpp
-    vertex.cpp
-    vertexshader.cpp
-    wavefrontmeshfactory.cpp)
+    light.cpp)
 
-target_link_libraries(engine GL GLEW luajit-5.1)
+include_directories(engine "..")
+target_link_libraries(engine graphics GL GLEW luajit-5.1)

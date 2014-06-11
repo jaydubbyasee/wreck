@@ -2,7 +2,7 @@
 #define __WRECK_ENGINE_CAMERA_H
 
 #include "cameratransform.h"
-#include "entity.h"
+#include "engine/entity.h"
 
 namespace wreck
 {

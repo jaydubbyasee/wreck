@@ -2,12 +2,12 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
-#include "engine/transform.h"
+#include "graphics/transform.h"
 #include "engine/camera.h"
-#include "engine/vertexshader.h"
-#include "engine/fragmentshader.h"
-#include "engine/shaderprogram.h"
-#include "engine/texture.h"
+#include "graphics/vertexshader.h"
+#include "graphics/fragmentshader.h"
+#include "graphics/shaderprogram.h"
+#include "graphics/texture.h"
 
 using namespace wreck;
 

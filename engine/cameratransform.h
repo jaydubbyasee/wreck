@@ -1,7 +1,7 @@
 #ifndef __WRECK_ENGINE_CAMERATRANSFORM_H
 #define __WRECK_ENGINE_CAMERATRANSFORM_H
 
-#include "transform.h"
+#include "graphics/transform.h"
 
 namespace wreck
 {

@@ -9,8 +9,14 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 # to enable indexing for C++11 syntax and api.
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -std=c++11)
 
-# The core engine library for Puncher
+# The core library for Wreck
+add_subdirectory(core)
+
+# The engine library for Wreck
 add_subdirectory(engine)
+
+# Thee graphics library for Wreck
+add_subdirectory(graphics)
 
 # Demo directory
 add_subdirectory(demo)

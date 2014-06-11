@@ -2,7 +2,7 @@
 #define __WRECK_ENGINE_LIGHT_H
 
 #include <glm/glm.hpp>
-#include "entity.h"
+#include "engine/entity.h"
 
 namespace wreck
 {

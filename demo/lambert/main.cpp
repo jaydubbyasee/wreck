@@ -2,14 +2,14 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
-#include "engine/transform.h"
+#include "graphics/transform.h"
 #include "engine/camera.h"
-#include "engine/vertexshader.h"
-#include "engine/fragmentshader.h"
-#include "engine/shaderprogram.h"
-#include "engine/texture.h"
-#include "engine/mesh.h"
-#include "engine/wavefrontmeshfactory.h"
+#include "graphics/vertexshader.h"
+#include "graphics/fragmentshader.h"
+#include "graphics/shaderprogram.h"
+#include "graphics/texture.h"
+#include "graphics/mesh.h"
+#include "graphics/wavefrontmeshfactory.h"
 #include "engine/light.h"
 
 using namespace wreck;
@@ -194,7 +194,7 @@ int main(int argc, char** argv)
             shaderProg.setUniformValue(2, v);
             shaderProg.setUniformValue(3, lightPos);
             shaderProg.setUniformValue(4, lightColor);
-            //shaderProg.setUniformValue(1, diffuse);
+            shaderProg.setUniformValue(1, diffuse);
             glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
         shaderProg.end();
 
