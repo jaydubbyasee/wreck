@@ -1,4 +1,4 @@
-add_library(core
+add_library(core SHARED
     file.cpp
     buffer.cpp
     logger.cpp

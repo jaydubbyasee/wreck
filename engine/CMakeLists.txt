@@ -1,4 +1,4 @@
-add_library(engine
+add_library(engine SHARED
     basicapplication.cpp
     camera.cpp
     cameratransform.cpp
