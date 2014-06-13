@@ -7,4 +7,4 @@ add_library(engine
     light.cpp)
 
 include_directories(engine "..")
-target_link_libraries(engine graphics GL GLEW luajit-5.1)
+target_link_libraries(engine core graphics GL GLEW luajit-5.1)

@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
-#include "graphics/transform.h"
+#include "core/transform.h"
 #include "engine/camera.h"
 #include "graphics/vertexshader.h"
 #include "graphics/fragmentshader.h"

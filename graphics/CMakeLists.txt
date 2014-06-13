@@ -4,7 +4,6 @@ add_library(graphics
     shader.cpp
     shaderprogram.cpp
     texture.cpp
-    transform.cpp
     vertex.cpp
     vertexshader.cpp
     wavefrontmeshfactory.cpp)

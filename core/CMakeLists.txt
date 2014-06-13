@@ -4,6 +4,7 @@ add_library(core
     logger.cpp
     matrix.cpp
     vector.cpp
-    string.cpp)
+    string.cpp
+    transform.cpp)
 
 target_link_libraries(core GL GLEW luajit-5.1)
