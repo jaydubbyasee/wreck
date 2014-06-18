@@ -125,12 +125,12 @@ int main(int argc, char** argv)
     ShaderProgram shaderProg;
 
     WavefrontMeshFactory factory;
-    Mesh* mesh = factory.load("../../wreck/assets/uvcube.obj");
-    if(!vs.load("../../wreck/assets/lambert.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/lambert.fs")) std::cout << "Fragment shader error." << std::endl;
+    Mesh* mesh = factory.load("assets/uvcube.obj");
+    if(!vs.load("assets/lambert.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("assets/lambert.fs")) std::cout << "Fragment shader error." << std::endl;
 
     Texture texture;
-    texture.load("../../wreck/assets/uvpattern.dds");
+    texture.load("assets/uvpattern.dds");
 
     Light light(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(1.0f, 1.0f, 1.0f));
     light.setIntensity(1.0f);
@@ -140,7 +140,7 @@ int main(int argc, char** argv)
     shaderProg.setFragmentShader(&fs);
     shaderProg.link();
 
-    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
@@ -182,7 +182,6 @@ int main(int argc, char** argv)
         glm::mat4 v = camera.getViewMatrix();
         glm::mat4 p = camera.getProjectionMatrix();
         glm::mat4 mvp = p*v*m;
-
 
         // Begin drawing
         shaderProg.begin();

@@ -124,12 +124,12 @@ int main(int argc, char** argv)
     ShaderProgram shaderProg;
 
     WavefrontMeshFactory factory;
-    Mesh* mesh = factory.load("../../wreck/assets/uvcube.obj");
-    if(!vs.load("../../wreck/assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    Mesh* mesh = factory.load("assets/uvcube.obj");
+    if(!vs.load("assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
     Texture texture;
-    texture.load("../../wreck/assets/uvpattern.dds");
+    texture.load("assets/uvpattern.dds");
 
     std::cout << "Linking..." << std::endl;
     shaderProg.setVertexShader(&vs);

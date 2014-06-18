@@ -95,15 +95,15 @@ int main(int argc, char** argv)
     glBindBuffer(GL_ARRAY_BUFFER, uvbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(uvBuffer), uvBuffer, GL_STATIC_DRAW);
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     VertexShader vs;
     FragmentShader fs;
     ShaderProgram shaderProg;
 
-    if(!vs.load("../../assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    if(!vs.load("assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
     std::cout << "Linking..." << std::endl;
     shaderProg.setVertexShader(&vs);
@@ -111,7 +111,7 @@ int main(int argc, char** argv)
     shaderProg.link();
 
     Texture tex;
-    tex.load("../../assets/uvpattern.dds");
+    tex.load("assets/uvpattern.dds");
     tex.use();
 
     glm::mat4 mvp(1.0f);

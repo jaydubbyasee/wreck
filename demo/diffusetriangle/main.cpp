@@ -71,8 +71,8 @@ int main(int argc, char** argv)
     FragmentShader fs;
     ShaderProgram shaderProg;
 
-    if(!vs.load("../../assets/diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../assets/diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    if(!vs.load("assets/diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("assets/diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
     std::cout << "Linking..." << std::endl;
     shaderProg.setVertexShader(&vs);

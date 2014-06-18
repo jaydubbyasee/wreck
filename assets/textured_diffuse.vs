@@ -9,6 +9,6 @@ layout(location = 0) uniform mat4 mvp;
 
 void main()
 {
-	gl_Position = mvp * vec4(vert,1);
-	UV = uvcoord;
+    gl_Position = mvp * vec4(vert,1);
+    UV = uvcoord;
 }

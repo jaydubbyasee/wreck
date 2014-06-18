@@ -99,13 +99,13 @@ void createMesh(GLuint& vao)
     glBindBuffer(GL_ARRAY_BUFFER, uvbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(uvBuffer), uvBuffer, GL_STATIC_DRAW);
 
-    glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
     // In practical situations, it may be useful to store Textures in a collection of
     // some sort so they may be reused for additional mesh instances.
     Texture tex;
-    tex.load("../../wreck/assets/uvpattern.dds");
+    tex.load("assets/uvpattern.dds");
     tex.use();
 }
 
@@ -164,8 +164,8 @@ int main(int argc, char** argv)
     FragmentShader fs;
     ShaderProgram shaderProg;
 
-    if(!vs.load("../../wreck/assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
-    if(!fs.load("../../wreck/assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
+    if(!vs.load("assets/textured_diffuse.vs")) std::cout << "Vertex Shader error." << std::endl;
+    if(!fs.load("assets/textured_diffuse.fs")) std::cout << "Fragment shader error." << std::endl;
 
     std::cout << "Linking..." << std::endl;
     shaderProg.setVertexShader(&vs);
