@@ -98,8 +98,6 @@ void mouseCameraControl(SDL_Event& evt, SDL_Window* window, Camera& camera, Uint
 
     SDL_WarpMouseInWindow(window, width/2, height/2);
     camera.getTransform()->rotate(glm::radians(y), glm::radians(x), 0.0f);
-
-    std::cout << x << "," << y << std::endl;
 }
 
 int main(int argc, char** argv)
@@ -118,7 +116,7 @@ int main(int argc, char** argv)
                   static_cast<float>(width)/static_cast<float>(height),
                   0.000001f,
                   1000.0f);
-    camera.getTransform()->setPosition(0.0f,0.0f,5.0f);
+    camera.getTransform()->setPosition(0.0f,0.0f,50.0f);
 
     VertexShader vs;
     FragmentShader fs;
@@ -132,7 +130,7 @@ int main(int argc, char** argv)
     Texture texture;
     texture.load("assets/uvpattern.dds");
 
-    Light light(glm::vec3(5.0f, 5.0f, 5.0f), glm::vec3(1.0f, 1.0f, 1.0f));
+    Light light(glm::vec3(0.0f, 0.0f, 50.0f), glm::vec3(1.0f, 0.0f, 1.0f));
     light.setIntensity(1.0f);
 
     std::cout << "Linking..." << std::endl;
@@ -140,7 +138,6 @@ int main(int argc, char** argv)
     shaderProg.setFragmentShader(&fs);
     shaderProg.link();
 
-    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     glEnable(GL_DEPTH_TEST);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Black
 
@@ -177,7 +174,6 @@ int main(int argc, char** argv)
 
         glm::vec3 lightPos = light.getTransform()->getPosition();
         glm::vec3 lightColor = light.getColor() * light.getIntensity();
-        glm::vec4 diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
         glm::mat4 m = glm::mat4(1.0f);
         glm::mat4 v = camera.getViewMatrix();
         glm::mat4 p = camera.getProjectionMatrix();
@@ -193,7 +189,7 @@ int main(int argc, char** argv)
             shaderProg.setUniformValue(2, v);
             shaderProg.setUniformValue(3, lightPos);
             shaderProg.setUniformValue(4, lightColor);
-            shaderProg.setUniformValue(1, diffuse);
+
             glDrawElements(GL_TRIANGLES, mesh->indices.size(), GL_UNSIGNED_INT, 0);
         shaderProg.end();
 

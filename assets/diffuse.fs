@@ -5,5 +5,5 @@ out vec4 outDiffuse;
 
 void main()
 {
-	outDiffuse = diffuse;
+    outDiffuse = diffuse;
 }
