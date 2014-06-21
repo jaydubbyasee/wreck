@@ -9,4 +9,7 @@
 *DependInfo.cmake
 *cmake_clean.cmake
 *CMakeDirectoryInformation.cmake
+*.user
+.project
+.cproject
 build/*
