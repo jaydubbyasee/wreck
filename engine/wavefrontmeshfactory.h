@@ -1,5 +1,4 @@
-#ifndef __WRECK_WAVEFRONTMESHFACTORY_H
-#define __WRECK_WAVEFRONTMESHFACTORY_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -33,4 +32,3 @@ private:
 
 }
 
-#endif // __WRECK_WAVEFRONTMESHFACTORY_H

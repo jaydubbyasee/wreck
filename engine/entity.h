@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_ENTITY_H
-#define __WRECK_ENGINE_ENTITY_H
+#pragma once
 
 #include "transform.h"
 
@@ -18,4 +17,3 @@ protected:
 
 }
 
-#endif // __WRECK_ENGINE_ENTITY_H

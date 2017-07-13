@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_TEXTURE_H
-#define __WRECK_ENGINE_TEXTURE_H
+#pragma once
 
 #include <string>
 #include <GL/glew.h>
@@ -19,5 +18,3 @@ namespace wreck
         GLuint texid;
     };
 }
-
-#endif

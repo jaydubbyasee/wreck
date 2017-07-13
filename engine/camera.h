@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_CAMERA_H
-#define __WRECK_ENGINE_CAMERA_H
+#pragma once
 
 #include "cameratransform.h"
 #include "entity.h"
@@ -92,5 +91,3 @@ namespace wreck
         bool projectionChanged;
     };
 }
-
-#endif

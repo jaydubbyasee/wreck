@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_TRANSFORM_H
-#define __WRECK_ENGINE_TRANSFORM_H
+#pragma once
 
 #define GLM_FORCE_RADIANS
 
@@ -121,4 +120,3 @@ namespace wreck
     };
 }
 
-#endif

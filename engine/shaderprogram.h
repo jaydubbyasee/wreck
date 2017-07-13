@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_SHADER_PROGRAM_H
-#define __WRECK_ENGINE_SHADER_PROGRAM_H
+#pragma once
 
 #include "vertexshader.h"
 #include "fragmentshader.h"
@@ -35,5 +34,3 @@ namespace wreck
         GLuint programID;
     };
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef __WRECK_ENGINE_SHADER_H
-#define __WRECK_ENGINE_SHADER_H
+#pragma once
 
 #include <string>
 #include <GL/glew.h>
@@ -28,4 +27,3 @@ namespace wreck
     };
 }
 
-#endif
