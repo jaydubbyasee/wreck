@@ -12,18 +12,18 @@ namespace wreck
 	{
 
 	public:
-		Mesh(std::vector<Vertex> vertexData, std::vector<uint> indices);
+		Mesh(std::vector<Vertex> vertexData, std::vector<glm::uint> indices);
 		~Mesh();
 
 		void use();
 		void updateBindings();
 
 		std::vector<Vertex> vertexData;
-		std::vector<uint> indices;
+		std::vector<glm::uint> indices;
 
-		GLuint vao;
-		GLuint vbo;
-		GLuint ibo;
+		glm::uint vao;
+		glm::uint vbo;
+		glm::uint ibo;
 	};
 }
 

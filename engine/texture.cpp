@@ -18,7 +18,7 @@ namespace wreck
 
     bool Texture::load(std::string filename)
     {
-        gli::texture2D texture(gli::load_dds(filename.c_str()));
+        gli::texture2d texture(gli::load_dds(filename.c_str()));
 
         if(texture.empty())
         {
@@ -31,8 +31,8 @@ namespace wreck
             GL_TEXTURE_2D,
             0,
             GL_RGB,
-            texture.dimensions().x,
-            texture.dimensions().y,
+            texture.extent().x,
+			texture.extent().y,
             0,
             GL_BGR,
             GL_UNSIGNED_BYTE,

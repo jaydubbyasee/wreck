@@ -21,11 +21,11 @@ namespace wreck
 Mesh* WavefrontMeshFactory::load(std::string filename)
 {
     std::vector<Vertex> vertexData;
-    std::vector<uint> indices;
+    std::vector<glm::uint> indices;
     std::vector<glm::vec3> position;
     std::vector<glm::vec2> uv;
     std::vector<glm::vec3> normal;
-    std::map<std::string, uint> vertMap;
+    std::map<std::string, glm::uint> vertMap;
 
 
     std::ifstream file(filename);
@@ -95,8 +95,8 @@ void WavefrontMeshFactory::processVertex(std::string vertToken,
                                          std::vector<glm::vec3>& position,
                                          std::vector<glm::vec2>& uv,
                                          std::vector<glm::vec3>& normal,
-                                         std::vector<uint>& indices,
-                                         std::map<std::string, uint>& vertMap,
+                                         std::vector<glm::uint>& indices,
+                                         std::map<std::string, glm::uint>& vertMap,
                                          std::vector<Vertex>& vertexData)
 {
     if(vertMap.find(vertToken) != vertMap.end())

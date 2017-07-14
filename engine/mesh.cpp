@@ -6,7 +6,7 @@
 namespace wreck
 {
 
-Mesh::Mesh(std::vector<Vertex> vertexData, std::vector<uint> indices)
+Mesh::Mesh(std::vector<Vertex> vertexData, std::vector<glm::uint> indices)
 {
     this->vertexData = vertexData;
     this->indices = indices;
@@ -44,7 +44,7 @@ void Mesh::updateBindings()
     // Index buffer
     glGenBuffers(1, &ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), &indices[0], GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(glm::uint), &indices[0], GL_STATIC_DRAW);
 }
 
 void Mesh::use()
